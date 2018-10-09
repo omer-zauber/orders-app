@@ -81,15 +81,13 @@ export class OrdersPage {
     }
   }
 
-  scanBarcode() {
-    console.log("click!");
-    // async scanBarcode() {
-    //  const results = await this.barcode.scan();
-    const results = { cancelled: true, text: "0000254" };
-    // if ((!results.cancelled) && results.text) {
-    console.log("ding!");
-    this.search = "0000254";
-    // }
+  async scanBarcode() {
+    const results = await this.barcode.scan();
+    if (!results.cancelled && results.text) {
+      this.search = results.text;
+    }
+    // this.search = "0000276"; //for testing purposes
+
     this.filterOrders(this.search);
   }
 }
