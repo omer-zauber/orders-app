@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
@@ -9,6 +10,7 @@ import { OrderDetailsPage } from '../pages/order-details/order-details';
 import { OrdersPage } from '../pages/orders/orders';
 import { SignupPage } from '../pages/signup/signup';
 import { AuthService } from '../services/auth';
+import { OrdersService } from '../services/orders';
 
 @NgModule({
   declarations: [
@@ -17,10 +19,9 @@ import { AuthService } from '../services/auth';
     LoginPage,
     OrderDetailsPage,
     OrdersPage,
-    SignupPage,
-    
+    SignupPage
   ],
-  imports: [BrowserModule, IonicModule.forRoot(MyApp)],
+  imports: [BrowserModule, IonicModule.forRoot(MyApp), HttpModule],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -32,7 +33,8 @@ import { AuthService } from '../services/auth';
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    AuthService
+    AuthService,
+    OrdersService
   ]
 })
 export class AppModule {}
