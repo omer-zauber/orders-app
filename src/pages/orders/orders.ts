@@ -1,26 +1,26 @@
-import { Component, SimpleChanges } from '@angular/core';
-import { OrdersService } from '../../services/orders';
-import { AuthService } from '../../services/auth';
+import { Component, SimpleChanges } from "@angular/core";
+import { OrdersService } from "../../services/orders";
+import { AuthService } from "../../services/auth";
 import {
   LoadingController,
   AlertController,
   ModalController
-} from 'ionic-angular';
-import { Order } from '../../models/order';
-import { OrderDetailsPage } from '../order-details/order-details';
+} from "ionic-angular";
+import { Order } from "../../models/order";
+import { OrderDetailsPage } from "../order-details/order-details";
 import {
   BarcodeScanner,
   BarcodeScannerOptions
-} from '@ionic-native/barcode-scanner';
+} from "@ionic-native/barcode-scanner";
 
 @Component({
-  selector: 'page-orders',
-  templateUrl: 'orders.html'
+  selector: "page-orders",
+  templateUrl: "orders.html"
 })
 export class OrdersPage {
   orders: Order[] = [];
   barcodeOptions: BarcodeScannerOptions;
-  search: string = '';
+  search: string = "";
 
   constructor(
     private ordersService: OrdersService,
@@ -33,7 +33,7 @@ export class OrdersPage {
 
   ionViewDidLoad() {
     const loading = this.loadingCtrl.create({
-      content: 'Please wait...'
+      content: "Please wait..."
     });
     loading.present();
     this.authservice
@@ -53,9 +53,9 @@ export class OrdersPage {
             loading.dismiss();
 
             const alert = this.alertCtrl.create({
-              title: 'An error occurred!',
+              title: "An error occurred!",
               message: error.json().error,
-              buttons: ['Ok']
+              buttons: ["Ok"]
             });
             alert.present();
           }
@@ -71,7 +71,7 @@ export class OrdersPage {
     console.log(eventText);
     this.orders = this.ordersService.getOrders();
 
-    if (eventText && eventText.trim() !== '') {
+    if (eventText && eventText.trim() !== "") {
       this.orders = this.orders.filter(function(order: Order) {
         const searchInsideText = `${order.orderId} ${order.customerName} ${
           order.productDesc
@@ -82,13 +82,14 @@ export class OrdersPage {
   }
 
   scanBarcode() {
-    console.log('click!');
+    console.log("click!");
     // async scanBarcode() {
     //  const results = await this.barcode.scan();
-    const results = { cancelled: true, text: '0000254' };
+    const results = { cancelled: true, text: "0000254" };
     // if ((!results.cancelled) && results.text) {
-    console.log('ding!');
-    this.search = '0000254';
+    console.log("ding!");
+    this.search = "0000254";
     // }
+    this.filterOrders(this.search);
   }
 }
