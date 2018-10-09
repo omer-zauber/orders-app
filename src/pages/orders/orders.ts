@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { OrdersService } from '../../services/orders';
 import { AuthService } from '../../services/auth';
 import {
@@ -8,6 +8,10 @@ import {
 } from 'ionic-angular';
 import { Order } from '../../models/order';
 import { OrderDetailsPage } from '../order-details/order-details';
+import {
+  BarcodeScanner,
+  BarcodeScannerOptions
+} from '@ionic-native/barcode-scanner';
 
 @Component({
   selector: 'page-orders',
@@ -15,15 +19,16 @@ import { OrderDetailsPage } from '../order-details/order-details';
 })
 export class OrdersPage {
   orders: Order[] = [];
+  barcodeOptions: BarcodeScannerOptions;
   search: string = '';
-  searchCrit = 'orderId';
 
   constructor(
     private ordersService: OrdersService,
     private authservice: AuthService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private barcode: BarcodeScanner
   ) {}
 
   ionViewDidLoad() {
@@ -62,19 +67,28 @@ export class OrdersPage {
     const modal = this.modalCtrl.create(OrderDetailsPage, order);
     modal.present();
   }
-
-  filterOrders(ev: any) {
+  filterOrders(eventText: string) {
+    console.log(eventText);
     this.orders = this.ordersService.getOrders();
 
-    const value = ev.target.value;
-
-    if (value && value.trim() !== '') {
+    if (eventText && eventText.trim() !== '') {
       this.orders = this.orders.filter(function(order: Order) {
         const searchInsideText = `${order.orderId} ${order.customerName} ${
           order.productDesc
         }`;
-        return searchInsideText.toLowerCase().includes(value.toLowerCase());
+        return searchInsideText.toLowerCase().includes(eventText.toLowerCase());
       });
     }
+  }
+
+  scanBarcode() {
+    console.log('click!');
+    // async scanBarcode() {
+    //  const results = await this.barcode.scan();
+    const results = { cancelled: true, text: '0000254' };
+    // if ((!results.cancelled) && results.text) {
+    console.log('ding!');
+    this.search = '0000254';
+    // }
   }
 }
