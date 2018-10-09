@@ -15,6 +15,8 @@ import { OrderDetailsPage } from '../order-details/order-details';
 })
 export class OrdersPage {
   orders: Order[] = [];
+  search: string = '';
+  searchCrit = 'orderId';
 
   constructor(
     private ordersService: OrdersService,
@@ -59,5 +61,20 @@ export class OrdersPage {
   onOrderDetails(order: Order) {
     const modal = this.modalCtrl.create(OrderDetailsPage, order);
     modal.present();
+  }
+
+  filterOrders(ev: any) {
+    this.orders = this.ordersService.getOrders();
+
+    const value = ev.target.value;
+
+    if (value && value.trim() !== '') {
+      this.orders = this.orders.filter(function(order: Order) {
+        const searchInsideText = `${order.orderId} ${order.customerName} ${
+          order.productDesc
+        }`;
+        return searchInsideText.toLowerCase().includes(value.toLowerCase());
+      });
+    }
   }
 }

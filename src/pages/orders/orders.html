@@ -3,7 +3,9 @@
   <ion-navbar>
     <ion-title>Orders</ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top>
+      <ion-searchbar placeholder="Filter Orders" (ionInput)="filterOrders($event)"></ion-searchbar>
+    </ion-toolbar>
 </ion-header>
 
 

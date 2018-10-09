@@ -24,9 +24,10 @@ export class OrdersService {
       .do((orders: Order[]) => {
         if (orders) {
           this.orders = orders;
-        } else {
-          this.orders = [];
         }
+      })
+      .do(() => {
+        console.log(this.getOrders());
       });
     // In a real app, replace "someUid" with extracted uid
   }
