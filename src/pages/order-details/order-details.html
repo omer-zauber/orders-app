@@ -1,12 +1,20 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>order-details</ion-title>
+    <ion-title>Order # {{orderId}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <p>Product ID #: {{productId}}</p>
+      <p>Description: {{ productDesc }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <button ion-button color="danger" (click)="onClose()">Close</button>
 
 </ion-content>

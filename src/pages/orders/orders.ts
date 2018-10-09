@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
 import { OrdersService } from '../../services/orders';
 import { AuthService } from '../../services/auth';
-import { LoadingController, AlertController } from 'ionic-angular';
+import {
+  LoadingController,
+  AlertController,
+  ModalController
+} from 'ionic-angular';
 import { Order } from '../../models/order';
+import { OrderDetailsPage } from '../order-details/order-details';
 
 @Component({
   selector: 'page-orders',
@@ -15,7 +20,8 @@ export class OrdersPage {
     private ordersService: OrdersService,
     private authservice: AuthService,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController
   ) {}
 
   ionViewDidLoad() {
@@ -50,8 +56,8 @@ export class OrdersPage {
       });
   }
 
-  onOrderDetails(order) {
-    
+  onOrderDetails(order: Order) {
+    const modal = this.modalCtrl.create(OrderDetailsPage, order);
+    modal.present();
   }
-
 }
